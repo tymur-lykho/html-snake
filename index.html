@@ -5,20 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML-Snake</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/3.0.1/modern-normalize.min.css"
+      integrity="sha512-q6WgHqiHlKyOqslT/lgBgodhd03Wp4BEqKeW6nNtlOY4quzyG3VoQKFrieaCeSnuVseNKRGpGeDU3qPmabCANg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
     <script type="module" src="./js/main.js"></script>
   </head>
   <body>
-    <header></header>
+    <header class="section header-section">
+      <div class="container header-container">
+        <nav class="nav-bar">
+          <a href="#" class="header-logo">
+            <svg class="header-log-icon" width="50" height="50">
+              <use href="./img/sprite.svg#snake"></use>
+            </svg>
+            HTML-Snake
+          </a>
+          <div class="score-wrapper">
+            <svg class="cup-icon" width="30" height="30">
+              <use href="./img/sprite.svg#cup"></use>
+            </svg>
+            <p class="points" id="points">0000</p>
+          </div>
+          <ul class="nav-list">
+            <li class="nav-item">Mode</li>
+            <li class="nav-item">
+              <a href="" class="score-list button">Score List</a>
+            </li>
+          </ul>
+        </nav>
+        <button class="menu-btn button" type="button">
+          <svg class="menu-icon" width="30" height="30">
+            <use href="./img/sprite.svg#menu"></use>
+          </svg>
+        </button>
+      </div>
+    </header>
     <main>
-      <section class="section">
+      <section class="section game-section">
         <div class="container main-container" onload="draw();">
           <canvas
             class="canvas"
-            id="tutorial"
+            id="game-window"
             width="400"
             height="400"
           ></canvas>
+        </div>
+      </section>
+      <section class="section section-controller">
+        <div class="container controller-container">
+          <button class="pause-btn button" type="button" id="btn-pause">
+            <svg class="pause-icon" width="16" height="16">
+              <use href="./img/sprite.svg#pause"></use>
+            </svg>
+          </button>
+          <button class="reload-btn button" type="button" id="btn-reload">
+            <svg class="reload-icon" width="16" height="16">
+              <use href="./img/sprite.svg#reload"></use>
+            </svg>
+          </button>
+          <ul class="control-btn-list">
+            <li class="control-btn-item">
+              <button class="control-btn button" type="button" id="btn-up">
+                <svg class="ctrl-btn-icon up" width="50" height="50">
+                  <use href="./img/sprite.svg#arrow"></use>
+                </svg>
+              </button>
+            </li>
+            <li class="control-btn-item">
+              <button class="control-btn button" type="button" id="btn-left">
+                <svg class="ctrl-btn-icon left" width="50" height="50">
+                  <use href="./img/sprite.svg#arrow"></use>
+                </svg>
+              </button>
+            </li>
+            <li class="control-btn-item">
+              <button class="control-btn button" type="button" id="btn-right">
+                <svg class="ctrl-btn-icon right" width="50" height="50">
+                  <use href="./img/sprite.svg#arrow"></use>
+                </svg>
+              </button>
+            </li>
+            <li class="control-btn-item">
+              <button class="control-btn button" type="button" id="btn-down">
+                <svg class="ctrl-btn-icon down" width="50" height="50">
+                  <use href="./img/sprite.svg#arrow"></use>
+                </svg>
+              </button>
+            </li>
+          </ul>
         </div>
       </section>
     </main>
