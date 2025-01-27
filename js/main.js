@@ -2,8 +2,8 @@ const canvas = document.getElementById("game-window");
 const points = document.getElementById("points");
 const ctx = canvas.getContext("2d");
 
-let gameMode = 'INFINITY';//INFINITY, WALLS
-let infinityLife = true;
+let gameMode = 'WALLS';// INFINITY, WALLS
+let infinityLife = false;
 
 let curentSnakeSize = 5;
 
@@ -13,9 +13,9 @@ let moveDirection = 'RIGHT';
 
 let isGameStart = true;
 
-let areaWidth = 40; //20
-let areaHeight = 40; //20
-let areaSegmentSize = 10; //20
+let areaWidth = 20; //20
+let areaHeight = 20; //20
+let areaSegmentSize = 20; //20
 
 
 let snakeArray = setDefaultSnake();
@@ -214,25 +214,12 @@ document.getElementById('btn-left').addEventListener('click', () => handleDirect
 document.getElementById('btn-right').addEventListener('click', () => handleDirectionChange('ArrowRight'));
 
 function handleDirectionChange(key) {
-	const pauseButton = document.getElementById('btn-pause');
-	const pauseIcon = pauseButton.querySelector('use');
 	switch (key) {
 		case ' ':
-			isGameStart = isGameStart ? false : true; 
-			if (isGameStart) {
-				pauseIcon.setAttribute('href', './img/sprite.svg#pause');
-				requestAnimationFrame(gameLoop);
-			} else {
-				pauseIcon.setAttribute('href', './img/sprite.svg#play');
-			}
-			break;
+			gamePause(isGameStart);
+			break; 
 		case 'Enter':
-			isGameStart = true; 
-			pauseIcon.setAttribute('href', './img/sprite.svg#pause');
-			requestAnimationFrame(gameLoop);
-			snakeArray = setDefaultSnake();
-			points.textContent = String('0').padStart(4, "0");
-			eatCoordinate = [];
+			gameRestart();
 			break;
     case 'ArrowUp':
       if (moveDirection !== 'DOWN') moveDirection = 'UP';
@@ -248,3 +235,84 @@ function handleDirectionChange(key) {
       break;
   }
 } 
+
+const pauseButton = document.getElementById('btn-pause');
+const pauseIcon = pauseButton.querySelector('use');
+const pauseWrap = document.querySelector('.pause-wrapper');
+
+function gamePause(state) {
+	isGameStart = !state;
+	if (isGameStart) {
+		pauseIcon.setAttribute('href', './img/sprite.svg#pause');
+		pauseWrap.classList.remove('is-pause');
+		requestAnimationFrame(gameLoop);
+	} else {
+		pauseIcon.setAttribute('href', './img/sprite.svg#play');
+		pauseWrap.classList.add('is-pause');
+	}
+}
+
+function gameRestart() {
+	gamePause(false); 
+	pauseIcon.setAttribute('href', './img/sprite.svg#pause');
+	requestAnimationFrame(gameLoop);
+	snakeArray = setDefaultSnake();
+	points.textContent = String('0').padStart(4, "0");
+	eatCoordinate = [];
+}
+
+let settingsChenged = false;
+
+document.querySelectorAll('.menu-item-options input').forEach((input) => {
+  input.addEventListener('change', (event) => {
+		const { name, value } = event.target;
+		switch (name) {
+			case 'snake-hit':
+				infinityLife = value === 'yes' ? false : true;
+				break;
+			case 'walls':
+				gameMode = value === 'on' ? 'WALLS' : 'INFINITY';
+				break;
+			case 'area-size':
+				if (value === 'small') {
+					areaWidth = 20;
+					areaHeight = 20;
+					areaSegmentSize = 20;
+				} else if (value === 'large') {
+					areaWidth = 40;
+					areaHeight = 40;
+					areaSegmentSize = 10;
+				}
+				break;
+			}
+			settingsChenged = true;
+  });
+});
+
+(() => {
+  const refs = {
+    openModalBtn: document.querySelector("[menu-window-open]"),
+    closeModalBtn: document.querySelectorAll("[menu-window-close]"),
+    modal: document.querySelector("[data-menu-window]"),
+    body: document.body,
+  };
+
+	refs.openModalBtn.addEventListener("click", toggleModal);
+  
+  refs.closeModalBtn.forEach(btn => {
+    btn.addEventListener("click", event => {
+      event.preventDefault();
+      toggleModal();
+    });
+  });
+
+	function toggleModal() {
+		gamePause(true);
+		if (settingsChenged) {
+			gameRestart();
+			settingsChenged = !settingsChenged;
+		}
+    refs.modal.classList.toggle("is-open");
+    refs.body.classList.toggle("scroll-lock");
+  }
+})();

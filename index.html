@@ -20,6 +20,7 @@
     />
     <link rel="stylesheet" href="./css/styles.css" />
     <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/menu.js"></script>
   </head>
   <body>
     <header class="section header-section">
@@ -44,7 +45,7 @@
             </li>
           </ul>
         </nav>
-        <button class="menu-btn button" type="button">
+        <button class="menu-btn button" type="button" menu-window-open>
           <svg class="menu-icon" width="30" height="30">
             <use href="./img/sprite.svg#menu"></use>
           </svg>
@@ -60,6 +61,9 @@
             width="400"
             height="400"
           ></canvas>
+          <div class="pause-wrapper">
+            <p>PAUSE</p>
+          </div>
         </div>
       </section>
       <section class="section section-controller">
@@ -108,5 +112,57 @@
       </section>
     </main>
     <footer></footer>
+    <div class="menu" data-menu-window>
+      <button class="close-btn" type="button" menu-window-close>
+        <svg class="close-icon" width="40" height="40">
+          <use href="./img/sprite.svg#close"></use>
+        </svg>
+      </button>
+      <div class="container menu-container">
+        <button class="score-btn">Score List</button>
+        <p class="menu-text">Game Settings</p>
+        <ul class="menu-list">
+          <li class="menu-item">
+            <p class="menu-item-label">Snake Hitbox</p>
+            <div class="menu-item-options">
+              <label>
+                <input type="radio" name="snake-hit" value="yes" checked />
+                Yes
+              </label>
+              <label>
+                <input type="radio" name="snake-hit" value="no" />
+                No
+              </label>
+            </div>
+          </li>
+          <li class="menu-item">
+            <p class="menu-item-label">Walls</p>
+            <div class="menu-item-options">
+              <label>
+                <input type="radio" name="walls" value="on" checked />
+                On
+              </label>
+              <label>
+                <input type="radio" name="walls" value="off" />
+                Off
+              </label>
+            </div>
+          </li>
+          <li class="menu-item">
+            <p class="menu-item-label">Area Size</p>
+            <div class="menu-item-options">
+              <label>
+                <input type="radio" name="area-size" value="small" checked />
+                Small (20x20)
+              </label>
+              <label>
+                <input type="radio" name="area-size" value="large" />
+                Large (40x40)
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </body>
 </html>
